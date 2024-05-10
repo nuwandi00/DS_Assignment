@@ -1,0 +1,102 @@
+
+[
+    {
+    "id":"1",
+    "title":"Basic HTML",
+    "Username":"Universe Code",
+    "Vote":"4.7",
+    "students":"{1000}",
+    "price":"RS.1000",
+    "oldPrice":"RS.2000"
+    },
+    {
+        "id":"2",
+        "title":"Basic CSS",
+        "Username":"Universe Code",
+        "Vote":"4.7",
+        "students":"{1000}",
+        "price":"Rs.1000",
+        "oldPrice":"Rs.2000"
+    },
+    {
+        "id":"3",
+        "title":"SpringBoot",
+        "Username":"Universe Code",
+        "Vote":"4.7",
+        "students":"{1000}",
+        "price":"Rs.1000",
+        "oldPrice":"RS.2000"
+    },
+    {
+        "id":"4",
+        "title":"MernStack",
+        "Username":"Universe Code",
+        "Vote":"4.7",
+        "students":"{1000}",
+        "price":"RS.1000",
+        "oldPrice":"Rs.2000"
+    },
+    {
+        "id":"5",
+        "title":"NodeJs",
+        "Username":"Universe Code",
+        "Vote":"4.7",
+        "students":"{1000}",
+        "price":"RS.1000",
+        "oldPrice":"Rs.2000"
+    },
+    {
+        "id":"6",
+        "title":"ReactJs",
+        "Username":"Universe Code",
+        "Vote":"4.7",
+        "students":"{1000}",
+        "price":"RS.1000",
+        "oldPrice":"Rs.2000"
+    },
+    {
+        "id":"5",
+        "title":"NodeJs",
+        "Username":"Universe Code",
+        "Vote":"4.7",
+        "students":"{1000}",
+        "price":"RS.1000",
+        "oldPrice":"Rs.2000"
+    },
+    {
+        "id":"6",
+        "title":"ReactJs",
+        "Username":"Universe Code",
+        "Vote":"4.7",
+        "students":"{1000}",
+        "price":"RS.1000",
+        "oldPrice":"Rs.2000"
+    }, 
+    {
+        "id":"7",
+        "title":"Kotline",
+        "Username":"Universe Code",
+        "Vote":"4.7",
+        "students":"{1000}",
+        "price":"RS.1000",
+        "oldPrice":"Rs.2000"
+    },
+    {
+        "id":"8",
+        "title":"PHP",
+        "Username":"Universe Code",
+        "Vote":"4.7",
+        "students":"{1000}",
+        "price":"RS.1000",
+        "oldPrice":"Rs.2000"
+    }, 
+    {
+        "id":"9",
+        "title":"Python",
+        "Username":"Universe Code",
+        "Vote":"4.7",
+        "students":"{1000}",
+        "price":"RS.1000",
+        "oldPrice":"Rs.2000"
+    }
+]
