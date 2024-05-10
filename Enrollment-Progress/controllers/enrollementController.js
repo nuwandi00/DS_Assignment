@@ -6,9 +6,9 @@ import twilio from "twilio";
 import nodemailer from "nodemailer";
 
 const fetchUsers = async () => {
-  const users = await fetch('http://localhost:8000/api/auth/users');
+  const users = await fetch("http://localhost:8000/api/auth/users");
   console.log(users);
-}
+};
 
 export const createEnrollement = async (req, res, next) => {
   const newEnrollement = new Enrollement(req.body);
@@ -122,11 +122,12 @@ export const getEnrollementsSubsequentLogin = async (req, res, next) => {
 };*/
 export const sendNotifications = async (username) => {
   try {
-    const user = await fetch(`http://localhost:8000/api/auth/getEmail?username=${username}`)
-                    .then((response) => response.json());
+    const user = await fetch(
+      `http://localhost:8000/api/auth/getEmail?username=${username}`
+    ).then((response) => response.json());
     const userEmail = user;
     await sendEmailNotification(userEmail, "You have enrolled");
-    console.log('User:', user);
+    console.log("User:", user);
     // Send SMS notification if needed
     // await sendSMSNotification("You have enrolled");
   } catch (err) {
@@ -158,8 +159,8 @@ const sendEmailNotification = async (userEmails, notification) => {
 };
 //notification controller
 
-const accountSid = "ACf327f0120f0e5f642d9ae22126a5b8ec";
-const authToken = "a45ae863a1222dd9835427c7f859a297";
+const accountSid = process.env.accountSid;
+const authToken = process.env.authToken;
 const client = twilio(accountSid, authToken);
 
 const sendSMSNotification = async (notification) => {
