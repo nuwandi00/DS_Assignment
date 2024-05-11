@@ -5,6 +5,7 @@ import {
   getEnrollement,
   getEnrollements,
   getEnrollementsSubsequentLogin,
+  getEnrollementsSubsequentLogin1,
   updateEnrollement,
   getEnrollementsSubsequentLoginAfter,
   removeStudentFromEnrollment,
@@ -31,8 +32,12 @@ router.get("/getUsers", sendNotifications);
 
 // For subsequent logins
 router.post(
-  "/subsequent-login",
+  "/subsequent-login1",
   verifyStudent1,
+  getEnrollementsSubsequentLogin1
+);
+router.post(
+  "/subsequent-login",
   getEnrollementsSubsequentLogin
 );
 

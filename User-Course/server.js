@@ -6,6 +6,7 @@ import authRoute from "./routes/authRoutes.js";
 import courseRoute from "./routes/courseRoutes.js";
 import contentRoutes from "./routes/contentRoutes.js";
 import approveRoutes from "./routes/approveRoutes.js";
+import cors from "cors";
 
 const app = express();
 dotenv.config();
@@ -18,6 +19,7 @@ const connect = async () => {
     throw error;
   }
 };
+app.use(cors())
 app.use(cookieParser());
 app.use(express.json());
 

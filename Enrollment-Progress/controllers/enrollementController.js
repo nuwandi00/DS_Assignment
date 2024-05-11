@@ -4,11 +4,12 @@ import createError from "http-errors";
 import jwt from "jsonwebtoken";
 import twilio from "twilio";
 import nodemailer from "nodemailer";
+import axios from 'axios';
 
 const fetchUsers = async () => {
-  const users = await fetch("http://localhost:8000/api/auth/users");
+  const users = await fetch('http://localhost:8000/api/auth/users');
   console.log(users);
-};
+}
 
 export const createEnrollement = async (req, res, next) => {
   const newEnrollement = new Enrollement(req.body);
@@ -56,7 +57,7 @@ export const getEnrollements = async (req, res, next) => {
     res.status(500).json(err);
   }
 };
-export const getEnrollementsSubsequentLogin = async (req, res, next) => {
+export const getEnrollementsSubsequentLogin1 = async (req, res, next) => {
   const token = req.cookies.access_token;
 
   try {
@@ -84,7 +85,10 @@ export const getEnrollementsSubsequentLogin = async (req, res, next) => {
           { $addToSet: { students: username } },
           { upsert: true }
         );
+
         await sendNotifications(username);
+        
+        await axios.post("http://localhost:8000/api/auth/enrollModules", {username:username, code:code});
       } catch (error) {
         return next(createError(401, "Unauthorized: step1"));
       }
@@ -96,38 +100,14 @@ export const getEnrollementsSubsequentLogin = async (req, res, next) => {
   }
 };
 
-/*export const sendNotifications = async (req, res,username) => {
-  try {
-    // Fetch user's email address
-    const {userid} =req.body;
-    const user = await fetch(`http://localhost:8000/api/auth/getEmail?username=${userid}`)
-                    .then((response) => response.json()).then((responseJson) => {
-                      console.log(responseJson);
-                      return responseJson;
-                    });
-    // const userEmail = user.email; // Assuming the User model has an email field
-    await sendEmailNotification(user, "You have enrolled");
-    console.log('User Emil:', user);
-    res.send(user);
-    //(`http://localhost:8000/api/auth/getEmail?username=${userid}`)
 
-    // Send email notification
-     await sendEmailNotification(userEmail, "You have enrolled");
-
-    // Send SMS notification
-    // await sendSMSNotification("You have enrolled");
-  } catch (err) {
-    console.error("Error sending notifications:", err);
-  }
-};*/
 export const sendNotifications = async (username) => {
   try {
-    const user = await fetch(
-      `http://localhost:8000/api/auth/getEmail?username=${username}`
-    ).then((response) => response.json());
+    const user = await fetch(`http://localhost:8000/api/auth/getEmail?username=${username}`)
+                    .then((response) => response.json());
     const userEmail = user;
     await sendEmailNotification(userEmail, "You have enrolled");
-    console.log("User:", user);
+    console.log('User:', user);
     // Send SMS notification if needed
     // await sendSMSNotification("You have enrolled");
   } catch (err) {
@@ -159,8 +139,8 @@ const sendEmailNotification = async (userEmails, notification) => {
 };
 //notification controller
 
-const accountSid = process.env.accountSid;
-const authToken = process.env.authToken;
+const accountSid = "ACf327f0120f0e5f642d9ae22126a5b8ec";
+const authToken = "a45ae863a1222dd9835427c7f859a297";
 const client = twilio(accountSid, authToken);
 
 const sendSMSNotification = async (notification) => {
@@ -240,5 +220,43 @@ export const removeStudentFromEnrollment = async (req, res, next) => {
     res.status(200).json(enrollement);
   } catch (err) {
     next(err);
+  }
+};
+export const getEnrollementsSubsequentLogin = async (req, res, next) => {
+  
+  
+  try {
+  
+    const { username, code } = req.body;
+    const enrollement = await Enrollement.findOne({
+      code: code,
+      students: username,
+    });
+    if (!enrollement) {
+      //kalin enroll wela naththm enroll wenna
+      try {
+        
+        const paiduser = await Paid.findOne({ code: code, students: username });
+        if (!paiduser) {
+          return next(createError(401, "Unauthorized: User is not paid"));
+        }
+
+        await Enrollement.findOneAndUpdate(
+          { code: code },
+          { $addToSet: { students: username } },
+          { upsert: true }
+        );
+
+        await sendNotifications(username);
+        
+        await axios.post("http://localhost:8000/api/auth/enrollModules", {username:username, code:code});
+      } catch (error) {
+        return next(createError(401, "Unauthorized: step1"));
+      }
+    }
+    // User is already logged in, display "You are logged in" message
+    return res.status(200).json({ message: "You are logged in" });
+  } catch (error) {
+    return next(createError(401, "Unauthorized: step2"));
   }
 };
