@@ -1,12 +1,18 @@
 import React from "react";
 import pic from "../img/chocolate.png";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const Payment = () => {
   const itemName = "Ferrero Rocher";
   const itemPrice = 800;
   const [quantity, setQuantity] = useState(1);
   const [finalAmount, setFinalAmount] = useState(itemPrice);
+
+  useEffect(() => {
+    localStorage.setItem("username", "Kamal");
+    localStorage.setItem("paidCourse", "IT1250");
+  }, []);
 
   const increment = () => {
     setQuantity(quantity + 1);

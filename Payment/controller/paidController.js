@@ -69,6 +69,7 @@ export const getEnrollements = async (req, res, next) => {
 // };
 
 export const paidUsers = async (req, res) => {
+  console.log("hello yasas");
   const username = req.query.username;
   const code = req.query.code;
 
@@ -87,6 +88,6 @@ export const paidUsers = async (req, res) => {
     console.log("Error retrieving user Modules : ", error);
     res
       .status(500)
-      .json({ message: "Internal Server Error", error: error.message });
+      .json({ message: "Internal Server Error5", error: error.message });
   }
 };
