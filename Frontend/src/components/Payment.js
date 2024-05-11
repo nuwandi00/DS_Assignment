@@ -24,10 +24,12 @@ const Payment = () => {
     }
   };
   const checkout = () => {
-    fetch("http://localhost:8000/api/payment", {
+    fetch("http://localhost:8003/api/payment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization:
+          "Bearer sk_test_51P9AbBCYsAvQyhDS6tx3mlPgp0fYJshoewE1iBeXDUEp8Ku03COai9iP1KpJ5GdSwui3RAD7i35T5IxASnG52OER00Uct9o5ei",
       },
       mode: "cors",
       body: JSON.stringify({
