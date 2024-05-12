@@ -47,7 +47,7 @@ export const login = async (req, res, next) => {
         httpOnly: true,
       })
       .status(200)
-      .json({ details: { ...otherDetails } });
+      .json({ token,details: { ...otherDetails } });
   } catch (err) {
     next(err);
   }
@@ -86,3 +86,64 @@ export const getEmailByUsername = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 }
+
+export const enrolledModules = async(req, res,next) =>{
+  const code = req.body.code;
+  const username = req.body.username;
+  try {
+ 
+    
+    await User.findOneAndUpdate({ username: username }, { $addToSet: { modules: code } }, { upsert: true });
+
+    
+    return res.status(200).json({ message: "First login successful" });
+  } catch (error) {
+    return next(createError(401, "Unauthorized: Invalid token"));
+  }
+}
+
+/*export const  coursesInModules = async (req, res, next) => {
+  const token = req.cookies.access_token;
+
+  try {
+    if (!token) {
+      return next(createError(401, "Unauthorized: Token not provided"));
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT);
+    const { username } = decoded;
+    const enrollement = await User.findOne({
+      username,
+    });
+    console.log(enrollement.modules);
+   
+    return res.status(200).json(enrollement.modules);
+  } catch (error) {
+    return next(createError(401, "Unauthorized: step2"));
+  }
+};*/
+
+export const coursesInModules = async (req, res) => {
+  const { username } = req.query; // Retrieve the username from query parameters
+
+  if (!username) {
+    return res.status(400).json({ message: 'Enter the Username' });
+  }
+
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    
+    console.log('User Modules : ', user.modules);
+    res.json(user.modules);
+  } catch (error) {
+    console.log('Error retrieving user Modules : ', error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+
+}
+
+}
+
