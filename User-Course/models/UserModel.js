@@ -24,7 +24,11 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    refreshToken: String
+    refreshToken: String,
+    modules:{
+        type: [String], 
+        default: [],     
+      },
 });
 
 export default mongoose.model('User', userSchema);
