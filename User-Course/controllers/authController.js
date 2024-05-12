@@ -47,7 +47,7 @@ export const login = async (req, res, next) => {
         httpOnly: true,
       })
       .status(200)
-      .json({ details: { ...otherDetails } });
+      .json({ token,details: { ...otherDetails } });
   } catch (err) {
     next(err);
   }
@@ -102,6 +102,27 @@ export const enrolledModules = async(req, res,next) =>{
   }
 }
 
+/*export const  coursesInModules = async (req, res, next) => {
+  const token = req.cookies.access_token;
+
+  try {
+    if (!token) {
+      return next(createError(401, "Unauthorized: Token not provided"));
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT);
+    const { username } = decoded;
+    const enrollement = await User.findOne({
+      username,
+    });
+    console.log(enrollement.modules);
+   
+    return res.status(200).json(enrollement.modules);
+  } catch (error) {
+    return next(createError(401, "Unauthorized: step2"));
+  }
+};*/
+
 export const coursesInModules = async (req, res) => {
   const { username } = req.query; // Retrieve the username from query parameters
 
@@ -121,4 +142,8 @@ export const coursesInModules = async (req, res) => {
     console.log('Error retrieving user Modules : ', error);
     res.status(500).json({ message: "Internal Server Error" });
   }
+
 }
+
+}
+
