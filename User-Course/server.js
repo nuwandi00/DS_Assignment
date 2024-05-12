@@ -2,10 +2,13 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import registerRoute from "./routes/registerRoute.js";
+import loginRoute from "./routes/loginRoute.js";
 import authRoute from "./routes/authRoutes.js";
 import courseRoute from "./routes/courseRoutes.js";
 import contentRoutes from "./routes/contentRoutes.js";
 import approveRoutes from "./routes/approveRoutes.js";
+import verifyJWT from "./middlewares/verifyJWT.js";
 import cors from "cors";
 
 const app = express();
@@ -23,7 +26,11 @@ app.use(cors())
 app.use(cookieParser());
 app.use(express.json());
 
+app.use("/register", registerRoute);
+app.use("/login", loginRoute);
 app.use("/api/auth", authRoute);
+
+app.use(verifyJWT);
 app.use("/api/course", courseRoute);
 app.use("/api/content", contentRoutes);
 app.use("/api/approve", approveRoutes);

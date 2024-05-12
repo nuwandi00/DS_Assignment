@@ -1,4 +1,5 @@
 import express from "express";
+const router = express.Router();
 import { login, register, getUsers, getEmailByUsername, enrolledModules, coursesInModules } from "../controllers/authController.js";
 
 const router = express.Router();

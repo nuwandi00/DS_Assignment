@@ -86,6 +86,7 @@ export const getEmailByUsername = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 }
+
 export const enrolledModules = async(req, res,next) =>{
   const code = req.body.code;
   const username = req.body.username;
@@ -100,6 +101,7 @@ export const enrolledModules = async(req, res,next) =>{
     return next(createError(401, "Unauthorized: Invalid token"));
   }
 }
+
 /*export const  coursesInModules = async (req, res, next) => {
   const token = req.cookies.access_token;
 
@@ -120,6 +122,7 @@ export const enrolledModules = async(req, res,next) =>{
     return next(createError(401, "Unauthorized: step2"));
   }
 };*/
+
 export const coursesInModules = async (req, res) => {
   const { username } = req.query; // Retrieve the username from query parameters
 
@@ -139,5 +142,8 @@ export const coursesInModules = async (req, res) => {
     console.log('Error retrieving user Modules : ', error);
     res.status(500).json({ message: "Internal Server Error" });
   }
+
+}
+
 }
 
