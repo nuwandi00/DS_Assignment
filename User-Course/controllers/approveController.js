@@ -4,9 +4,7 @@ import Course from "../models/courseModel.js";
 const approveCourse = async (req, res) => {
   try {
     if (!req?.body?.code || !req?.body?.status) {
-      return res
-        .status(400)
-        .json({ message: "Enter all required input fields" });
+      return res.status(400).json({ message: "Enter all required input fields" });
     }
 
     const course = await Course.findOne({ code: req.body.code });
@@ -25,13 +23,24 @@ const approveCourse = async (req, res) => {
 
       res.status(201).json(result);
     } else {
-      return res
-        .status(400)
-        .json({ message: "Course Approval has been rejected" });
+      return res.status(400).json({ message: "Course Approval has been rejected" });
     }
   } catch (error) {
     console.error("Error approving course : ", error);
   }
 };
 
-export { approveCourse };
+const getApprovedCourses = async (req, res) => {
+  try {
+    const courses = await Approval.find();
+    if (!courses || courses.length === 0) {
+      return res.status(204).json({ message: "No Courses Found" });
+    }
+    res.json(courses);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
+export { approveCourse, getApprovedCourses };

@@ -15,10 +15,8 @@ const getAllContents = async (req, res) => {
 
 const createContent = async (req, res) => {
   try {
-    if (!req?.body?.code || !req?.body?.link) {
-      return res
-        .status(400)
-        .json({ message: "Enter all required input fields" });
+    if (!req?.body?.link) {
+      return res.status(400).json({ message: "Enter all required input fields" });
     }
 
     const course = await Course.findOne({ code: req.body.code });
@@ -48,9 +46,7 @@ const updateContent = async (req, res) => {
 
     const content = await Content.findOne({ _id: req.body.id });
     if (!content) {
-      return res
-        .status(400)
-        .json({ message: `No content matches ID ${req.body.id}` });
+      return res.status(400).json({ message: `No content matches ID ${req.body.id}` });
     }
 
     if (req.body?.link) content.link = req.body.link;
@@ -71,12 +67,11 @@ const deleteContent = async (req, res) => {
 
     const content = await Content.findOne({ _id: req.body.id });
     if (!content) {
-      return res
-        .status(204)
-        .json({ message: `No content matches with ID ${req.body.id}` });
+      return res.status(204).json({ message: `No content matches with ID ${req.body.id}` });
     }
 
     const result = await content.deleteOne({ _id: req.body.id });
+    console.log(result);
     res.json(result);
   } catch (error) {
     console.log("Error deleting course content : ", error);
