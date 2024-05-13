@@ -147,9 +147,9 @@ function CourseDashboard() {
     <>
         {isFaculty ? (
             <div className="flex flex-col mt-2 lg:flex-none">
-            <Modal show={show} onHide={handleClose} >
+            <Modal show={show} onHide={handleClose} style={{ position: 'absolute', marginTop: '-20%', width: '40%', padding: 60, marginLeft: '28%'}} className=' bg-cyan-800'>
                 <Modal.Header closeButton>
-                    <Modal.Title style={{color:"#373B61", fontWeight:"bold", marginLeft:"21%"}}>Update Course</Modal.Title>
+                    <Modal.Title style={{color:"#FFF", fontWeight:"bold", textAlign: 'center', fontSize: '38px', textTransform: 'uppercase', letterSpacing: 1}}>Update Course</Modal.Title>
                 </Modal.Header>
                 <Modal.Body style={{width:"100%", height:"200%"}}>
                     <Form>
@@ -186,11 +186,12 @@ function CourseDashboard() {
                 </Modal.Body>
                 <Modal.Footer>
                     <button 
-                        style={{ borderRadius:"5px", background:"#373B61", padding:"1.5%", width:"200px", fontSize:"17px", border:"#373B61", marginRight:"25%", color:"white" }} 
+                        style={{ borderRadius:"5px", background:"#FFF", padding:"6px 10px", width:"80%", fontSize:"17px", border:"#373B61", margin: "10px 0", color:"#0A6584", marginLeft: "10%", marginTop: 20, fontWeight: 'bold'}} 
                         onClick={saveUpdatedPost}>
                             Save Changes
                     </button>
-                    <button style={{ borderRadius:"5px", background:"#373B61", padding:"1.5%", width:"200px", fontSize:"17px", border:"#373B61", marginRight:"25%", color:"white" }} onClick={handleClose}>
+                    <button 
+                        style={{ borderRadius:"5px", background:"#FFF", padding:"6px 10px", width:"80%", fontSize:"17px", border:"#373B61", margin: "10px 0", color:"#0A6584", marginLeft: "10%", fontWeight: 'bold' }}                         onClick={handleClose}>
                         Close
                     </button>
                     <br /> 
