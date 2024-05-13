@@ -1,5 +1,5 @@
 import User from '../models/UserModel.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt'
 
 const handleNewUser = async (req, res) => {
     const { user, pwd, email } = req.body;

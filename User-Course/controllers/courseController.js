@@ -50,7 +50,7 @@ const updateCourse = async (req, res) => {
       return res.status(404).json({ message: `No course matches ID ${req.body.id}` });
     }
 
-    if (!req?.body?.name || !req?.body?.code || !req?.body?.description || !req?.body?.courseFee) {
+    if ( !req?.body?.name || !req?.body?.code || !req?.body?.description || !req?.body?.courseFee ) {
       return res.status(400).json({ message: "Enter all required input fields" });
     }
 
@@ -75,7 +75,9 @@ const deleteCourse = async (req, res) => {
 
     const course = await Course.findOne({ _id: req.body.id });
     if (!course) {
-      return res.status(204).json({ message: `No course matches with ID ${req.body.id}` });
+      return res
+        .status(204)
+        .json({ message: `No course matches with ID ${req.body.id}` });
     }
 
     const result = await course.deleteOne({ _id: req.body.id });
@@ -94,7 +96,9 @@ const getCourse = async (req, res) => {
 
     const course = await Course.findOne({ _id: req.params.id });
     if (!course) {
-      return res.status(204).json({ message: `No Course matches with ID ${req.params.id}` });
+      return res
+        .status(204)
+        .json({ message: `No Course matches with ID ${req.params.id}` });
     }
 
     res.json(course);
