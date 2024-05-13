@@ -106,7 +106,7 @@ function CourseForm() {
             navigate('/Home')
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Course Adding Error:', error);
         });
       } else {
           console.log('Only faculty users are allowed to create courses.');

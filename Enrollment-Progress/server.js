@@ -24,6 +24,7 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
+app.use("/api/cen",ecrudRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/enrollement", enrollementRoute);
 app.use("/api/course", courseRoute);

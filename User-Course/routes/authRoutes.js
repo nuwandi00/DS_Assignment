@@ -1,5 +1,4 @@
 import express from "express";
-const router = express.Router();
 import { login, register, getUsers, getEmailByUsername, enrolledModules, coursesInModules } from "../controllers/authController.js";
 
 
@@ -9,5 +8,5 @@ router.post("/login", login);
 router.get("/getEmail", getEmailByUsername);
 router.post("/enrollmodules", enrolledModules);
 router.get("/modules",coursesInModules);
-
+router.post("/remove", removeCourse);
 export default router;

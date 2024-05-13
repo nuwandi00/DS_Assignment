@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { Form , InputGroup } from "react-bootstrap";
+import Modal from 'react-bootstrap/Modal';
 
 function CourseDashboard() {
     const [isFaculty, setIsFaculty] = useState(false);
     const [courses, setCourses] = useState([]);
+    const [updatedPost, setUpdatedPost] = useState({});
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -51,12 +58,64 @@ function CourseDashboard() {
         });
     }, []);
 
+    const updatePost = (post) => {
+        setUpdatedPost(post);
+        handleShow();
+    }
+    
+    const handleChange = (e) => {
+        const { name, value} = e.target;
+    
+        setUpdatedPost((prev) => {
+            return {
+                ...prev,
+                [name]: value,
+            };
+        });
+    };
+
+    const saveUpdatedPost = () => {
+        const facultyRoleNumber = 1984;
+        const accessToken = localStorage.getItem('accessToken');
+        const roles = JSON.parse(localStorage.getItem('roles'));
+        const id = localStorage.getItem('courseId');
+        const { name, code, description, courseFee } = updatedPost;
+    
+        if (roles && roles.includes(facultyRoleNumber)) {
+            axios.put(`http://localhost:8000/api/course`, {
+                id,
+                name,
+                code,
+                description,
+                courseFee
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            })
+            .then((res) => {
+                console.log('Course updated successfully');
+                console.log(res);
+                window.location.reload();
+            })
+            .catch((err) => {
+                console.error('Error updating course:', err);
+                console.log();
+            });
+        } else {
+            console.log('Only faculty users are allowed to update courses.');
+        }
+    
+        handleClose();
+    };
+    
+
     const deleteCourse = () => {
         const facultyRoleNumber = 1984;
         const accessToken = localStorage.getItem('accessToken');
         const roles = JSON.parse(localStorage.getItem('roles'));
         const id = localStorage.getItem('courseId');
-    
+        
         if (roles && roles.includes(facultyRoleNumber)) {
             const confirmation = window.confirm("Do you want to delete this course?");
             if (confirmation) {
@@ -79,16 +138,65 @@ function CourseDashboard() {
             console.log('Only faculty users are allowed to delete courses.');
         }
     };
-    
 
-      const navigateToForm = () => {
+    const navigateToForm = () => {
         navigate("/create");
-      };
+    };
 
   return (
     <>
         {isFaculty ? (
             <div className="flex flex-col mt-2 lg:flex-none">
+            <Modal show={show} onHide={handleClose} style={{ position: 'absolute', marginTop: '-20%', width: '40%', padding: 60, marginLeft: '28%'}} className=' bg-cyan-800'>
+                <Modal.Header closeButton>
+                    <Modal.Title style={{color:"#FFF", fontWeight:"bold", textAlign: 'center', fontSize: '38px', textTransform: 'uppercase', letterSpacing: 1}}>Update Course</Modal.Title>
+                </Modal.Header>
+                <Modal.Body style={{width:"100%", height:"200%"}}>
+                    <Form>
+                        <Form.Group>
+                            <Form.Control 
+                                style={{ width: "80%", padding: "6px 10px", margin: "10px 0", border: "1px solid #373B61", borderRadius: "5px", boxSizing: "border-box", display: "block", marginLeft: "10%" }}
+                                name="name"
+                                value={updatedPost.name ? updatedPost.name : ""}
+                                onChange={handleChange}
+                            />
+                        
+                            <Form.Control 
+                                style={{ width: "80%", padding: "6px 10px", margin: "10px 0", border: "1px solid #373B61", borderRadius: "5px",boxSizing: "border-box", display: "block", marginLeft: "10%" }}
+                                name="code"
+                                value={updatedPost.code ? updatedPost.code : ""}
+                                onChange={handleChange}
+                            />
+
+                            <Form.Control 
+                                style={{ width: "80%", padding: "6px 10px", margin: "10px 0", border: "1px solid #373B61", borderRadius: "5px", boxSizing: "border-box", display: "block", marginLeft: "10%" }}
+                                name="description"
+                                value={updatedPost.description ? updatedPost.description : ""}
+                                onChange={handleChange}
+                            />
+
+                            <Form.Control 
+                                style={{ width: "80%", padding: "6px 10px", margin: "10px 0", border: "1px solid #373B61", borderRadius: "5px", boxSizing: "border-box", display: "block", marginLeft: "10%"}}
+                                name="courseFee"
+                                value={updatedPost.courseFee ? updatedPost.courseFee : ""}
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button 
+                        style={{ borderRadius:"5px", background:"#FFF", padding:"6px 10px", width:"80%", fontSize:"17px", border:"#373B61", margin: "10px 0", color:"#0A6584", marginLeft: "10%", marginTop: 20, fontWeight: 'bold'}} 
+                        onClick={saveUpdatedPost}>
+                            Save Changes
+                    </button>
+                    <button 
+                        style={{ borderRadius:"5px", background:"#FFF", padding:"6px 10px", width:"80%", fontSize:"17px", border:"#373B61", margin: "10px 0", color:"#0A6584", marginLeft: "10%", fontWeight: 'bold' }}                         onClick={handleClose}>
+                        Close
+                    </button>
+                    <br /> 
+                </Modal.Footer>
+            </Modal>
                 <div className="flex items-center justify-between mt-4 ml-[1300px] lg:flex-none">
                     <button className="w-48 p-2 text-sm font-medium text-gray-100 hover:text-gray-100 focus:outline-none focus:text-gray-900 bg-cyan-700" onClick={navigateToForm}>Create Course</button>
                 </div>
@@ -108,7 +216,7 @@ function CourseDashboard() {
                         <td className="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">${course.courseFee}</td>
                         <td className="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">{course.code}</td>
                         <td className="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
-                            <button className="mr-40 text-sm font-medium text-gray-700 hover:text-gray-900 focus:outline-none focus:text-gray-900">Update</button>
+                            <button className="mr-40 text-sm font-medium text-gray-700 hover:text-gray-900 focus:outline-none focus:text-gray-900" onClick={() => updatePost(course)}>Update</button>
                             <button className="text-sm font-medium text-red-700 hover:text-red-900 focus:outline-none focus:text-red-900" onClick={deleteCourse}>Delete</button>
                         </td>
                         </tr>

@@ -12,6 +12,16 @@ function Navbar() {
   const navigateToCourse = () => {
     navigate('/course');
   }
+  const navigateToEnrollment = () => {
+    navigate('/enrollment');
+  }
+  const navigateToEnroll = () => {
+    navigate('/courseenroll');
+  }
+  const navigateToProgress = () => {
+    navigate('/progress');
+  }
+
 
   const navigateToApprovals = () => {
     navigate('/approve')
@@ -23,6 +33,7 @@ function Navbar() {
         <MenuIcon className="w-6 h-6 md:hidden"/>
         <h2 className="text-3xl font-bold cursor-pointer">EduWave</h2>
         <h3 className="hidden text-sm cursor-pointer md:block" onClick={navigateToCourse}>Courses</h3>
+        <h3 className="hidden text-sm cursor-pointer md:block" onClick={navigateToEnrollment}>Enrollment</h3>
         <form className="hidden bg-[#f8fafb] md:flex border border-black rounded-3xl flex-1 h-12 item-center">
           <input 
             type="text"
@@ -31,7 +42,8 @@ function Navbar() {
           <SearchIcon className="w-5 h-5 mx-auto my-auto text-gray-400 ml-[640px]"/>
         </form>
         <h3 className="hidden text-sm cursor-pointer lg:block" onClick={navigateToApprovals}>Approvals</h3>
-        <h3 className="hidden text-sm cursor-pointer lg:block md:hidden">My Learnings</h3>
+        <h3 className="hidden text-sm cursor-pointer lg:block md:hidden"  onClick={navigateToEnroll}>Enroll</h3>
+        <h3 className="hidden text-sm cursor-pointer lg:block md:hidden"  onClick={navigateToProgress}>My Learnings</h3>
         <div className="flex">
         </div>
         <div className="justify-end hidden pr-4 space-x-4 md:flex">
