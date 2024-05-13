@@ -1,5 +1,5 @@
 import React from "react";
-import pic from "../img/chocolate.png";
+import pic from "../img/background.jpg";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -73,18 +73,14 @@ const Payment = () => {
   return (
     <div className="w-full mx-auto">
       <div className="w-full max-w-5xl mx-auto my-6 text-center font-raleway">
-        <div
-          className="my-10 text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-800"
-        >
-          Chocolate Corner
+        <div className="my-10 text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-800">
+          My Cart
         </div>
         <div
           className="flex flex-col lg:flex-row justify-center items-center
         mx-auto w-full my-16 border-2 bg-[#fcf6f6] border-slate-100 shadow-md py-4"
         >
-          <div
-            className="flex items-center justify-center w-full mx-auto my-24 lg:justify-end lg:w-6/12"
-          >
+          <div className="flex items-center justify-center w-full mx-auto my-24 lg:justify-end lg:w-6/12">
             <img src={pic} alt="" />
           </div>
           <div className="flex flex-col w-full py-8 lg:w-6/12">
