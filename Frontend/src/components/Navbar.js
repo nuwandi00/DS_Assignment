@@ -34,7 +34,7 @@ function Navbar() {
         <h2 className="text-3xl font-bold cursor-pointer">EduWave</h2>
         <h3 className="hidden text-sm cursor-pointer md:block" onClick={navigateToCourse}>Courses</h3>
         <h3 className="hidden text-sm cursor-pointer md:block" onClick={navigateToEnrollment}>Enrollment</h3>
-        <form className="hidden bg-[#f8fafb] md:flex border border-black rounded-3xl flex-1 h-12 item-center">
+        <form className="flex-1 hidden w-8 h-12 border border-black md:flex rounded-3xl item-center">
           <input 
             type="text"
             placeholder="Search for anything"

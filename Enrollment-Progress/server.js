@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import enrollementRoute from "./routes/enrollementRoutes.js";
 import paidRoute from "./routes/paidRoutes.js";
 import progressRoute from "./routes/progressRoute.js";
+import ecrudRoute from "./routes/ecrudRoute.js";
 import cors from "cors";
 
 const app = express();

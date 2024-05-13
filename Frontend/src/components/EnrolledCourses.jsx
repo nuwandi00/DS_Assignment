@@ -13,11 +13,11 @@ const EnrolledCourses = () => {
         const token = localStorage.getItem("token");
         const username = localStorage.getItem("username");
     
-        if (!token) {
-          // Redirect to login if token is not present
-          navigate("/login");
-          return;
-        }
+        // if (!token) {
+        //   // Redirect to login if token is not present
+        //   navigate("/login");
+        //   return;
+        // }
 
         setUsername(username);
         console.log(token);
@@ -46,12 +46,12 @@ const EnrolledCourses = () => {
   };
   return (
     <div className="container mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-4 text-center">Enrolled Courses</h1>
-      <h1 className="text-2xl font-bold mb-4 text-center">Welcome {username} </h1>
+      <h1 className="mb-4 text-2xl font-bold text-center">Enrolled Courses</h1>
+      <h1 className="mb-4 text-2xl font-bold text-center">Welcome {username} </h1>
       <p>Hera are Your Courses</p>
-      <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <ul className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {courses.map((course, index) => (
-          <li key={index} className="bg-gray-200 p-4 rounded-md">
+          <li key={index} className="p-4 bg-gray-200 rounded-md">
             <p className="text-lg font-semibold">{course}</p> {/* Adjust this line based on your response structure */}
           </li>
         ))}
