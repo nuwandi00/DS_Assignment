@@ -6,14 +6,14 @@ import {
   getEnrollements,
   getEnrollementsSubsequentLogin,
   getEnrollementsSubsequentLogin1,
+  getEnrollementsSubsequentLogin0,
   updateEnrollement,
   getEnrollementsSubsequentLoginAfter,
-  removeStudentFromEnrollment,
-  sendNotifications
+  removeStudentFromEnrollment
 } from "../controllers/enrollementController.js";
 import { verifyAdmin1, verifyStudent1 } from "../utils/verifyToken.js";
 const router = express.Router();
-
+/*
 //CREATE
 router.post("/", verifyAdmin1, createEnrollement);
 
@@ -29,11 +29,15 @@ router.get("/find/:id", verifyAdmin1, getEnrollement);
 // router.get("/", verifyAdmin1, getEnrollements);
 
 router.get("/getUsers", sendNotifications);
-
+*/
 // For subsequent logins
 router.post(
+  "/subsequent-login0",
+ verifyStudent1,
+  getEnrollementsSubsequentLogin0
+);
+router.post(
   "/subsequent-login1",
-  verifyStudent1,
   getEnrollementsSubsequentLogin1
 );
 router.post(
@@ -47,6 +51,6 @@ router.get("/subsequent", verifyStudent1, getEnrollementsSubsequentLoginAfter);
 //remove eka thiyena route eka id eka ena route eka kiyala hithala execute krama error penna ne
 //router.delete("/remove", verifyAdmin1, removeStudentFromEnrollment);
 
-router.delete("/remove", verifyAdmin1, removeStudentFromEnrollment);
+router.post("/remove", removeStudentFromEnrollment);
 
 export default router;

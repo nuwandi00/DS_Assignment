@@ -57,9 +57,10 @@ export const getEnrollements = async (req, res, next) => {
     res.status(500).json(err);
   }
 };
-export const getEnrollementsSubsequentLogin1 = async (req, res, next) => {
+export const getEnrollementsSubsequentLogin0 = async (req, res, next) => {
   const token = req.cookies.access_token;
-
+  
+console.log("Enrollement Login", token);
   try {
     if (!token) {
       return next(createError(401, "Unauthorized: Token not provided"));
@@ -109,7 +110,7 @@ export const sendNotifications = async (username) => {
     await sendEmailNotification(userEmail, "You have enrolled");
     console.log('User:', user);
     // Send SMS notification if needed
-    // await sendSMSNotification("You have enrolled");
+    await sendSMSNotification("You have enrolled");
   } catch (err) {
     console.error("Error sending notifications:", err);
   }
@@ -223,6 +224,44 @@ export const removeStudentFromEnrollment = async (req, res, next) => {
   }
 };
 export const getEnrollementsSubsequentLogin = async (req, res, next) => {
+  
+  
+  try {
+  
+    const { username, code } = req.body;
+    const enrollement = await Enrollement.findOne({
+      code: code,
+      students: username,
+    });
+    if (!enrollement) {
+      //kalin enroll wela naththm enroll wenna
+      try {
+        
+        const paiduser = await Paid.findOne({ code: code, students: username });
+        if (!paiduser) {
+          return next(createError(401, "Unauthorized: User is not paid"));
+        }
+
+        await Enrollement.findOneAndUpdate(
+          { code: code },
+          { $addToSet: { students: username } },
+          { upsert: true }
+        );
+
+        await sendNotifications(username);
+        
+        await axios.post("http://localhost:8000/api/auth/enrollModules", {username:username, code:code});
+      } catch (error) {
+        return next(createError(401, "Unauthorized: step1"));
+      }
+    }
+    // User is already logged in, display "You are logged in" message
+    return res.status(200).json({ message: "You are logged in" });
+  } catch (error) {
+    return next(createError(401, "Unauthorized: step2"));
+  }
+};
+export const getEnrollementsSubsequentLogin1 = async (req, res, next) => {
   
   
   try {

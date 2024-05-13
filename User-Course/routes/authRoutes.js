@@ -9,5 +9,5 @@ router.post("/login", login);
 router.get("/getEmail", getEmailByUsername);
 router.post("/enrollmodules", enrolledModules);
 router.get("/modules",coursesInModules);
-
+router.post("/remove", removeCourse);
 export default router;
