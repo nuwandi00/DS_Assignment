@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const Payment = () => {
-  const itemName = "Ferrero Rocher";
+  const itemName = "Application Frameworks";
   const itemPrice = 800;
   const [quantity, setQuantity] = useState(1);
   const [finalAmount, setFinalAmount] = useState(itemPrice);
@@ -89,7 +89,7 @@ const Payment = () => {
               price:&nbsp;&nbsp;₹{itemPrice}
             </div>
 
-            <small className="mt-10 mb-3 font-semibold">Add Quantity</small>
+            {/* <small className="mt-10 mb-3 font-semibold">Add Quantity</small>
             <div className="flex items-center justify-center mb-10 text-slate-900">
               <span
                 onClick={decrement}
@@ -106,7 +106,7 @@ const Payment = () => {
               >
                 +
               </span>
-            </div>
+            </div> */}
 
             <div className="my-6 text-xl">
               Amount to be paid:
