@@ -9,6 +9,7 @@ import errorHandler from "./utils/errorHandler.js";
 import dotenv from "dotenv";
 import cors from "cors";
 import paymentRoutes from "./routes/paymentRoutes.js";
+import paidRoute from "./routes/paidRoutes.js";
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/payment", paymentRoutes);
+app.use("/api/paid", paidRoute);
 
 // Error handling middleware
 app.use(errorHandler);

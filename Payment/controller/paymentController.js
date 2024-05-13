@@ -4,7 +4,19 @@
 import asyncHandler from "express-async-handler";
 import Payment from "../model/paymentModel.js";
 import stripe from "stripe";
-const stripeInstance = stripe(process.env.STRIPE_SECRET_KEY);
+// import { loadStripe } from "@stripe/stripe-js";
+
+let stripeInstance;
+const getStripe = () => {
+  if (!stripeInstance) {
+    stripeInstance = stripe(
+      "sk_test_51P9AbBCYsAvQyhDS6tx3mlPgp0fYJshoewE1iBeXDUEp8Ku03COai9iP1KpJ5GdSwui3RAD7i35T5IxASnG52OER00Uct9o5ei"
+    );
+  }
+  return stripeInstance;
+};
+stripeInstance = getStripe(process.env.STRIPE_SECRET_KEY);
+// const stripeInstance = stripe(process.env.STRIPE_SECRET_KEY);
 
 //@desc Create New Payment
 //@route POST /api/payment

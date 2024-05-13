@@ -1,12 +1,18 @@
 import React from "react";
-import pic from "../img/chocolate.png";
+import pic from "../img/background.jpg";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const Payment = () => {
-  const itemName = "Ferrero Rocher";
+  const itemName = "Application Frameworks";
   const itemPrice = 800;
   const [quantity, setQuantity] = useState(1);
   const [finalAmount, setFinalAmount] = useState(itemPrice);
+
+  useEffect(() => {
+    localStorage.setItem("username", "Kamal");
+    localStorage.setItem("paidCourse", "IT1250");
+  }, []);
 
   const increment = () => {
     setQuantity(quantity + 1);
@@ -24,10 +30,12 @@ const Payment = () => {
     }
   };
   const checkout = () => {
-    fetch("http://localhost:8000/api/payment", {
+    fetch("http://localhost:8003/api/payment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization:
+          "Bearer sk_test_51P9AbBCYsAvQyhDS6tx3mlPgp0fYJshoewE1iBeXDUEp8Ku03COai9iP1KpJ5GdSwui3RAD7i35T5IxASnG52OER00Uct9o5ei",
       },
       mode: "cors",
       body: JSON.stringify({
@@ -65,18 +73,14 @@ const Payment = () => {
   return (
     <div className="w-full mx-auto">
       <div className="w-full max-w-5xl mx-auto my-6 text-center font-raleway">
-        <div
-          className="my-10 text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-800"
-        >
-          Chocolate Corner
+        <div className="my-10 text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-800">
+          My Cart
         </div>
         <div
           className="flex flex-col lg:flex-row justify-center items-center
         mx-auto w-full my-16 border-2 bg-[#fcf6f6] border-slate-100 shadow-md py-4"
         >
-          <div
-            className="flex items-center justify-center w-full mx-auto my-24 lg:justify-end lg:w-6/12"
-          >
+          <div className="flex items-center justify-center w-full mx-auto my-24 lg:justify-end lg:w-6/12">
             <img src={pic} alt="" />
           </div>
           <div className="flex flex-col w-full py-8 lg:w-6/12">
@@ -85,7 +89,7 @@ const Payment = () => {
               price:&nbsp;&nbsp;₹{itemPrice}
             </div>
 
-            <small className="mt-10 mb-3 font-semibold">Add Quantity</small>
+            {/* <small className="mt-10 mb-3 font-semibold">Add Quantity</small>
             <div className="flex items-center justify-center mb-10 text-slate-900">
               <span
                 onClick={decrement}
@@ -102,7 +106,7 @@ const Payment = () => {
               >
                 +
               </span>
-            </div>
+            </div> */}
 
             <div className="my-6 text-xl">
               Amount to be paid:

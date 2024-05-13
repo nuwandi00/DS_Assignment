@@ -1,9 +1,38 @@
 import React from "react";
 import success from "../img/success.png";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const Success = () => {
   //run a use effect and call order api to success the order
+
+  useEffect(() => {
+    const username = localStorage.getItem("username");
+    const paidCourse = localStorage.getItem("paidCourse");
+    console.log(username, paidCourse);
+
+    fetch("http://localhost:8003/api/paid/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+      body: JSON.stringify({
+        username: username,
+        code: paidCourse,
+      }),
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.ok) return res.json();
+        return res.json().then((json) => Promise.reject(json));
+      })
+      .catch((e) => {
+        console.log(e.error);
+        console.log(e);
+      });
+  }, []);
+
   return (
     <div
       className="grid place-items-center w-full lg:h-screen h-full

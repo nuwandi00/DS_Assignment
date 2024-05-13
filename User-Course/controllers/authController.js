@@ -165,6 +165,7 @@ export const removeCourse = async (req, res, next) => {
     // Remove the module code from the user's modules array
     user.modules.splice(moduleIndex, 1);
 
+
     // Save the updated user document
     await user.save();
 
