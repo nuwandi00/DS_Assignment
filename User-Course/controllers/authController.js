@@ -145,5 +145,5 @@ export const coursesInModules = async (req, res) => {
 
 }
 
-}
+
 
