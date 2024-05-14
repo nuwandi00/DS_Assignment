@@ -4,12 +4,10 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 
 const Success = () => {
-  //run a use effect and call order api to success the order
-
+  const courseName = localStorage.getItem("courseName");
+  const courseFee = localStorage.getItem("courseFee");
   useEffect(() => {
-    const username = localStorage.getItem("username");
-    const paidCourse = localStorage.getItem("paidCourse");
-    console.log(username, paidCourse);
+    // console.log(username, paidCourse);
 
     fetch("http://localhost:8003/api/paid/", {
       method: "POST",
@@ -18,8 +16,8 @@ const Success = () => {
       },
       mode: "cors",
       body: JSON.stringify({
-        username: username,
-        code: paidCourse,
+        username: courseName,
+        code: courseFee,
       }),
     })
       .then((res) => {
@@ -39,7 +37,10 @@ const Success = () => {
      font-raleway bg-[#F7F7F7]"
     >
       <div className="max-w-5xl rounded flex flex-col">
-        <span className="text-green-600 text-5xl">Payment successful</span>
+        <span className="text-green-600 text-5xl">
+          Payment successfully done for <br></br>
+          {courseName}
+        </span>
         <span className="text-yellow-600 text-center mt-8 text-2xl font-bold">
           Your order is in our system
         </span>

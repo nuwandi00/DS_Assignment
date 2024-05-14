@@ -2,31 +2,32 @@ import React from "react";
 import pic from "../img/background.jpg";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const Payment = () => {
-  const itemName = "Application Frameworks";
-  const itemPrice = 800;
+  const { state } = useLocation();
+  const { courseName, courseFee } = state;
   const [quantity, setQuantity] = useState(1);
-  const [finalAmount, setFinalAmount] = useState(itemPrice);
+  const [finalAmount, setFinalAmount] = useState(courseFee);
 
   useEffect(() => {
-    localStorage.setItem("username", "Kamal");
-    localStorage.setItem("paidCourse", "IT1250");
+    localStorage.setItem("courseName", courseName);
+    localStorage.setItem("courseFee", courseFee);
   }, []);
 
   const increment = () => {
     setQuantity(quantity + 1);
-    setFinalAmount(finalAmount + itemPrice);
+    setFinalAmount(finalAmount + courseFee);
   };
 
   const decrement = () => {
     if (quantity <= 1) {
       setQuantity(1);
-      setFinalAmount(itemPrice);
+      setFinalAmount(courseFee);
     }
     if (quantity > 1) {
       setQuantity(quantity - 1);
-      setFinalAmount(finalAmount - itemPrice);
+      setFinalAmount(finalAmount - courseFee);
     }
   };
   const checkout = () => {
@@ -43,14 +44,8 @@ const Payment = () => {
           {
             id: 1,
             quantity: quantity,
-            price: itemPrice,
-            name: itemName,
-          },
-          {
-            id: 2,
-            quantity: 1,
-            price: 500,
-            name: "Test Item",
+            price: courseFee,
+            name: courseName,
           },
         ],
       }),
@@ -84,9 +79,11 @@ const Payment = () => {
             <img src={pic} alt="" />
           </div>
           <div className="flex flex-col w-full py-8 lg:w-6/12">
-            <div className="text-4xl font-bold text-yellow-700">{itemName}</div>
+            <div className="text-4xl font-bold text-yellow-700">
+              {courseName}
+            </div>
             <div className="my-6 text-3xl font-semibold text-slate-600">
-              price:&nbsp;&nbsp;₹{itemPrice}
+              price:&nbsp;&nbsp;₹{courseFee}
             </div>
 
             {/* <small className="mt-10 mb-3 font-semibold">Add Quantity</small>
@@ -111,7 +108,7 @@ const Payment = () => {
             <div className="my-6 text-xl">
               Amount to be paid:
               <span className="pl-3 text-3xl font-bold text-green-500">
-                ₹{finalAmount}
+                ₹{courseFee}
               </span>
             </div>
             <div className="my-6">
